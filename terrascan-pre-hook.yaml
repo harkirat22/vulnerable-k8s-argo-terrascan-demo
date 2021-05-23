@@ -14,7 +14,7 @@ spec:
           secretName: ssh-key-secret
       containers:
       - name: terrascan-argocd
-        image: docker.io/harkirat22/terra-argo:123
+        image: accurics/terrascan:latest
         command: ["/bin/ash", "-c"]
         args:
         - >
