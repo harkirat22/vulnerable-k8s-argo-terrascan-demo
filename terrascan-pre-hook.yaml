@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: terrascan-hook-
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: ssh-key-secret
+      containers:
+      - name: terrascan-argocd
+        image: docker.io/harkirat22/terra-argo:a8ee529898c42357405616909da62ff486dfd0a3b4b1dd7735a2cdfa39de3eba
+        command: ["/bin/ash", "-c"]
+        args:
+        - >
+          cp /etc/secret-volume/ssh-privatekey /home/terrascan/.ssh/id_rsa &&
+          chmod 400 /home/terrascan/.ssh/id_rsa &&
+          /go/bin/terrascan scan -r git -u https://github.com/harkirat22/vulnerable-k8s-argo-terrascan-demo.git -i k8s -t k8s
+        volumeMounts:
+          - name: secret-volume
+            readOnly: true
+            mountPath: "/etc/secret-volume"
+      restartPolicy: Never
+  backoffLimit: 1
