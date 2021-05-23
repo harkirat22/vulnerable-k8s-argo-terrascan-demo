@@ -18,8 +18,6 @@ spec:
         command: ["/bin/ash", "-c"]
         args:
         - >
-          cp /etc/secret-volume/ssh-privatekey /home/terrascan/.ssh/id_rsa &&
-          chmod 400 /home/terrascan/.ssh/id_rsa &&
           /go/bin/terrascan scan -r git -u https://github.com/harkirat22/vulnerable-k8s-argo-terrascan-demo.git -i k8s -t k8s
         volumeMounts:
           - name: secret-volume
