@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: simple-node
-        image: registry.gitlab.com/research60/sast-integration
+        image: nginx:1.14.2
         ports:
         - containerPort: 3000
 ---
