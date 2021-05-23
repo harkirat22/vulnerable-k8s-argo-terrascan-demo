@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-node
+spec:
+  selector:
+    matchLabels:
+      app: simple-node
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: simple-node
+    spec:
+      containers:
+      - name: simple-node
+        image: registry.gitlab.com/research60/sast-integration
+        ports:
+        - containerPort: 3000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: simple-node-entrypoint
+spec:
+  selector:
+    app: simple-node
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
