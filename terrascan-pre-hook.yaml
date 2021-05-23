@@ -8,20 +8,12 @@ spec:
   ttlSecondsAfterFinished: 3600
   template:
     spec:
-      volumes:
-      - name: secret-volume
-        secret:
-          secretName: ssh-key-secret
       containers:
       - name: terrascan-argocd
-        image: accurics/terrascan:latest
-        command: ["/bin/ash", "-c"]
+        image:
+        command: ["/bin/sh", "-c"]
         args:
         - >
           /go/bin/terrascan scan -r git -u https://github.com/harkirat22/vulnerable-k8s-argo-terrascan-demo.git -i k8s -t k8s
-        volumeMounts:
-          - name: secret-volume
-            readOnly: true
-            mountPath: "/etc/secret-volume"
       restartPolicy: Never
   backoffLimit: 1
