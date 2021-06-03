@@ -35,7 +35,7 @@ kind: EndpointSlice
 metadata:
   name: example-abc
   labels:
-    kubernetes.io/service-name: simple-node-entrypoint
+    kubernetes.io/service-name: simple-node
 addressType: IPv4
 ports:
   - name: http
