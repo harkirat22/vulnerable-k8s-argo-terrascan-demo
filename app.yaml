@@ -47,5 +47,6 @@ endpoints:
     conditions:
       ready: true
     hostname: pod-1
-    nodeName: node-1
-    zone: us-west2-a
+    topology:
+      kubernetes.io/hostname: node-1
+      topology.kubernetes.io/zone: us-west2-a
