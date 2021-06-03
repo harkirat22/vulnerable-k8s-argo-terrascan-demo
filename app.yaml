@@ -1,31 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
+
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
-  name: simple-node
-spec:
-  selector:
-    matchLabels:
-      app: simple-node
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: simple-node
-    spec:
-      containers:
-      - name: simple-node
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 3000
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: simple-node-entrypoint
-spec:
-  selector:
-    app: simple-node
-  type: LoadBalancer
-  ports:
-    - protocol: TCP
-      port: 80
+  name: example-abc
+  labels:
+    kubernetes.io/service-name: example
+addressType: IPv4
+ports:
+  - name: http
+    protocol: TCP
+    port: 80
+endpoints:
+  - addresses:
+      - "169.254.169.254"
+    conditions:
+      ready: true
+    hostname: pod-1
+    nodeName: node-1
+    zone: us-west2-a
